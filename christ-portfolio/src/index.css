@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@600;700;800;900&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800;900&display=swap');
+
+:root {
+  --bg-dark: #050507;
+  --bg-surface: #0a090d;
+  --bg-card: rgba(16, 14, 20, 0.75);
+  --bg-card-hover: rgba(26, 22, 33, 0.9);
+
+  --accent-crimson: #E50914;
+  --accent-glow: #FF2A2A;
+  --accent-amber: #FFB300;
+  --accent-cyan: #00F0FF;
+
+  --text-platinum: #F5F2EB;
+  --text-ash: #9E9993;
+  --text-muted: #615D58;
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-crimson: rgba(229, 9, 20, 0.35);
+  --border-glow: rgba(229, 9, 20, 0.7);
+
+  --font-cinema: 'Cinzel', serif;
+  --font-display: 'Syne', sans-serif;
+  --font-action: 'Bebas Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-body: 'Space Grotesk', sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  cursor: default !important;
+  caret-color: transparent !important;
+}
+
+/* Interactive elements keep pointer */
+a, button, [role="button"], .btn-cinema, .btn-ghost {
+  cursor: pointer !important;
+}
+
+html, body {
+  background-color: var(--bg-dark);
+  color: var(--text-platinum);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: default;
+}
+
+/* Custom Cinema Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #050507;
+}
+::-webkit-scrollbar-thumb {
+  background: #252229;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-crimson);
+}
+
+/* Selection Color */
+::selection {
+  background: var(--accent-crimson);
+  color: #FFFFFF;
+}
+
+/* Film Grain Texture Overlay */
+.film-grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Vignette Shadow */
+.cinema-vignette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 90;
+  background: radial-gradient(circle at center, transparent 40%, rgba(3, 2, 4, 0.75) 100%);
+}
+
+/* 2.39:1 Cinemascope Bars */
+.cinema-bar-top,
+.cinema-bar-bottom {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: clamp(28px, 4.5vh, 48px);
+  background: #000000;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(16px, 3vw, 40px);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  -webkit-user-select: none;
+  user-select: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cinema-bar-top {
+  top: 0;
+}
+
+.cinema-bar-bottom {
+  bottom: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: none;
+}
+
+/* Glowing text helpers */
+.glow-crimson {
+  text-shadow: 0 0 16px rgba(229, 9, 20, 0.8), 0 0 35px rgba(229, 9, 20, 0.4);
+}
+
+.glow-amber {
+  text-shadow: 0 0 16px rgba(255, 179, 0, 0.8), 0 0 35px rgba(255, 179, 0, 0.4);
+}
+
+/* Glass panel */
+.cinema-panel {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cinema-panel:hover {
+  border-color: var(--border-crimson);
+  background: var(--bg-card-hover);
+  box-shadow: 0 10px 40px -10px rgba(229, 9, 20, 0.25);
+}
+
+/* Buttons */
+.btn-cinema {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #E50914, #B0060E);
+  color: #FFFFFF;
+  font-family: var(--font-action);
+  font-size: 18px;
+  letter-spacing: 2px;
+  padding: 12px 28px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 20px rgba(229, 9, 20, 0.4);
+}
+
+.btn-cinema:hover {
+  background: linear-gradient(135deg, #FF1E27, #D40812);
+  box-shadow: 0 0 30px rgba(229, 9, 20, 0.7);
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-platinum);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 2px;
+  padding: 12px 22px;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+}
+
+/* Keyframes */
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(1000%); }
+}
+
+@keyframes blinkSlow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.rec-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-crimson);
+  display: inline-block;
+  box-shadow: 0 0 8px var(--accent-crimson);
+  animation: blinkSlow 1.5s infinite;
+}
+
+/* Header Navigation Media Queries */
+.mobile-menu-btn {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .desktop-nav-menu {
+    display: none !important;
+  }
+  .desktop-telemetry {
+    display: none !important;
+  }
+  .mobile-menu-btn {
+    display: block !important;
+  }
+}
