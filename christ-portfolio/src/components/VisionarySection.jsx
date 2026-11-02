@@ -11,7 +11,7 @@ export default function VisionarySection() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '120px clamp(20px, 6vw, 80px)',
+        padding: 'clamp(75px, 10vh, 120px) clamp(20px, 6vw, 80px)',
         position: 'relative',
         zIndex: 10,
       }}
@@ -36,38 +36,15 @@ export default function VisionarySection() {
             <span>THE MIND BEHIND THE MODELS</span>
           </div>
 
-          <h2
-            style={{
-              fontFamily: 'var(--font-cinema)',
-              fontSize: 'clamp(2.2rem, 5vw, 4.2rem)',
-              color: '#FFFFFF',
-              lineHeight: 1.1,
-              letterSpacing: '2px',
-              marginBottom: '20px',
-            }}
-          >
-            WHERE PRECISION MEETS
-            <br />
-            <span
-              style={{
-                color: 'var(--accent-amber)',
-                textShadow: '0 0 30px rgba(255, 179, 0, 0.4)',
-              }}
-            >
+          <h2 className="visionary-title">
+            <span className="visionary-title-line">WHERE PRECISION MEETS</span>
+            <span className="visionary-title-line visionary-title-amber">
               LIMITLESS IMAGINATION.
             </span>
           </h2>
 
           {/* Mobile-Only Portrait Card: Displayed in About Me on mobile devices */}
-          <div
-            className="hero-portrait-mobile"
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              margin: '28px 0 32px',
-              width: '100%',
-            }}
-          >
+          <div className="hero-portrait-mobile">
             <CinematicHeroPortrait />
           </div>
 

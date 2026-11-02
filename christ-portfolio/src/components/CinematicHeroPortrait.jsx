@@ -66,6 +66,7 @@ export default function CinematicHeroPortrait() {
   return (
     <div
       ref={cardRef}
+      className="hero-portrait-card"
       onMouseEnter={() => {
         setIsHovered(true);
         soundEngine.playClick();
@@ -73,9 +74,6 @@ export default function CinematicHeroPortrait() {
       onMouseLeave={() => setIsHovered(false)}
       style={{
         position: 'relative',
-        width: 'clamp(280px, 86vw, 440px)',
-        maxWidth: '100%',
-        aspectRatio: '3 / 4.1',
         borderRadius: '16px',
         perspective: '1200px',
         transformStyle: 'preserve-3d',
@@ -104,7 +102,7 @@ export default function CinematicHeroPortrait() {
         {/* Crisp Photorealistic Portrait Image (Normal, sharp, no pixelation!) */}
         <img
           src="/profile.png"
-          alt="Christ — Creative Technologist"
+          alt="Mageshwaran — CAD &amp; Architectural Designer"
           style={{
             width: '100%',
             height: '100%',
@@ -170,15 +168,15 @@ export default function CinematicHeroPortrait() {
         <div
           style={{
             position: 'absolute',
-            top: '16px',
-            left: '18px',
-            right: '18px',
+            top: 'clamp(10px, 3.5%, 16px)',
+            left: 'clamp(12px, 4%, 18px)',
+            right: 'clamp(12px, 4%, 18px)',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
             fontFamily: 'var(--font-mono)',
-            fontSize: '10px',
-            letterSpacing: '2px',
+            fontSize: 'clamp(8px, 1.8vw, 10px)',
+            letterSpacing: 'clamp(1px, 0.3vw, 2px)',
             color: 'var(--text-platinum)',
             textShadow: '0 2px 6px rgba(0, 0, 0, 0.9)',
             zIndex: 5,
@@ -257,20 +255,23 @@ export default function CinematicHeroPortrait() {
         <div
           style={{
             position: 'absolute',
-            bottom: '16px',
-            left: '18px',
-            right: '18px',
+            bottom: 'clamp(10px, 3.5%, 16px)',
+            left: 'clamp(12px, 4%, 18px)',
+            right: 'clamp(12px, 4%, 18px)',
             zIndex: 5,
           }}
         >
           <div
             style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: '10px',
-              letterSpacing: '2.5px',
+              fontSize: 'clamp(8px, 1.8vw, 10px)',
+              letterSpacing: 'clamp(1.2px, 0.35vw, 2.5px)',
               color: 'var(--accent-amber)',
-              marginBottom: '4px',
+              marginBottom: '3px',
               textTransform: 'uppercase',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
             }}
           >
             CREATIVE CAD DESIGNER
@@ -282,14 +283,16 @@ export default function CinematicHeroPortrait() {
               justifyContent: 'space-between',
               alignItems: 'center',
               fontFamily: 'var(--font-mono)',
-              fontSize: '10px',
-              letterSpacing: '1.5px',
+              fontSize: 'clamp(7.5px, 1.6vw, 10px)',
+              letterSpacing: 'clamp(0.6px, 0.2vw, 1.5px)',
               color: 'var(--text-ash)',
+              gap: '4px',
+              flexWrap: 'nowrap',
             }}
           >
             <span>PITCH: {tilt.x > 0 ? `+${tilt.x.toFixed(1)}°` : `${tilt.x.toFixed(1)}°`}</span>
             <span>YAW: {tilt.y > 0 ? `+${tilt.y.toFixed(1)}°` : `${tilt.y.toFixed(1)}°`}</span>
-            <span style={{ color: '#4ADE80' }}>ONLINE ●</span>
+            <span style={{ color: '#4ADE80', whiteSpace: 'nowrap' }}>ONLINE ●</span>
           </div>
         </div>
       </div>

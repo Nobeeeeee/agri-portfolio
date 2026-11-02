@@ -123,22 +123,24 @@ export default function PrologueSection({ onExploreClick }) {
           <div
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(1.3rem, 2.8vw, 2.4rem)',
+              fontSize: 'clamp(1.15rem, 2.8vw, 2.4rem)',
               fontWeight: 800,
               letterSpacing: '2px',
               color: 'var(--text-platinum)',
-              lineHeight: 1.2,
+              lineHeight: 1.25,
               marginBottom: '22px',
             }}
           >
-            CREATIVE DESIGNER &bull;{' '}
+            <span style={{ whiteSpace: 'nowrap' }}>CREATIVE DESIGNER &bull;</span>{' '}
+            <br />
             <span
               style={{
                 color: 'var(--accent-crimson)',
                 textShadow: '0 0 25px rgba(229, 9, 20, 0.6)',
+                whiteSpace: 'nowrap',
               }}
             >
-              DESIGNER OF BUILDING INFORMATION MODELS
+              3D &amp; BIM DESIGNER
             </span>
           </div>
 

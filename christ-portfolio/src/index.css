@@ -258,12 +258,55 @@ html, body {
   display: none !important;
 }
 
+.hero-portrait-card {
+  width: clamp(280px, 30vw, 440px);
+  max-width: 100%;
+  aspect-ratio: 3 / 4.1;
+  margin: 0 auto;
+}
+
+/* Visionary Section Title: 2 lines across all viewports */
+.visionary-title {
+  font-family: var(--font-cinema);
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
+  color: #FFFFFF;
+  line-height: 1.1;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.visionary-title-line {
+  display: block;
+  white-space: nowrap;
+}
+
+.visionary-title-amber {
+  color: var(--accent-amber);
+  text-shadow: 0 0 30px rgba(255, 179, 0, 0.4);
+}
+
 @media (max-width: 900px) {
   .hero-portrait-desktop {
     display: none !important;
   }
   .hero-portrait-mobile {
     display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 22px auto 28px !important;
+  }
+  .hero-portrait-card {
+    width: clamp(200px, 58vw, 245px) !important;
+    max-width: 245px !important;
+    aspect-ratio: 3 / 3.9 !important;
+    margin: 0 auto !important;
+  }
+  .visionary-title {
+    font-size: clamp(1rem, 5.1vw, 2rem) !important;
+    letter-spacing: 1px !important;
+    line-height: 1.25 !important;
+    margin-bottom: 16px !important;
   }
 }
 
