@@ -1,5 +1,6 @@
 import React from 'react';
 import { Compass } from 'lucide-react';
+import CinematicHeroPortrait from './CinematicHeroPortrait';
 
 export default function VisionarySection() {
   return (
@@ -56,6 +57,19 @@ export default function VisionarySection() {
               LIMITLESS IMAGINATION.
             </span>
           </h2>
+
+          {/* Mobile-Only Portrait Card: Displayed in About Me on mobile devices */}
+          <div
+            className="hero-portrait-mobile"
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              margin: '28px 0 32px',
+              width: '100%',
+            }}
+          >
+            <CinematicHeroPortrait />
+          </div>
 
           <p
             style={{

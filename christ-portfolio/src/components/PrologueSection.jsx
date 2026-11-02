@@ -177,11 +177,11 @@ export default function PrologueSection({ onExploreClick }) {
           </div>
         </div>
 
-        {/* Right Column: 3D Photorealistic Portrait Monolith */}
+        {/* Right Column: 3D Photorealistic Portrait Monolith (Desktop Only in Home) */}
         <div
+          className="hero-portrait-desktop"
           style={{
             flex: '0 1 auto',
-            display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             pointerEvents: 'auto',

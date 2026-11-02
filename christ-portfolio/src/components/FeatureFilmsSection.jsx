@@ -6,6 +6,18 @@ export default function FeatureFilmsSection({ onOpenProject }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const startXRef = useRef(0);
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 1200
+  );
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isMobile = windowWidth <= 640;
+  const isTablet = windowWidth > 640 && windowWidth <= 960;
 
   const films = [
     {
@@ -101,7 +113,9 @@ export default function FeatureFilmsSection({ onOpenProject }) {
       id="features"
       style={{
         minHeight: '100vh',
-        padding: '120px clamp(16px, 4vw, 60px) 100px clamp(16px, 4vw, 60px)',
+        padding: isMobile
+          ? 'clamp(65px, 8vh, 90px) 8px clamp(50px, 7vh, 80px) 8px'
+          : '120px clamp(16px, 4vw, 60px) 100px clamp(16px, 4vw, 60px)',
         position: 'relative',
         zIndex: 10,
         overflow: 'hidden',
@@ -110,7 +124,7 @@ export default function FeatureFilmsSection({ onOpenProject }) {
     >
       <div style={{ maxWidth: '1350px', margin: '0 auto' }}>
         {/* Section Header */}
-        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+        <div style={{ textAlign: 'center', marginBottom: isMobile ? '24px' : '40px' }}>
           <div
             style={{
               display: 'inline-flex',
@@ -162,13 +176,13 @@ export default function FeatureFilmsSection({ onOpenProject }) {
           onMouseUp={handleTouchEnd}
           style={{
             position: 'relative',
-            height: 'clamp(460px, 58vh, 620px)',
+            height: isMobile ? 'clamp(420px, 55vh, 500px)' : 'clamp(460px, 58vh, 620px)',
             width: '100%',
             transformStyle: 'preserve-3d',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            margin: '20px 0 40px 0',
+            margin: isMobile ? '10px 0 28px 0' : '20px 0 40px 0',
             userSelect: 'none',
           }}
         >
@@ -191,26 +205,44 @@ export default function FeatureFilmsSection({ onOpenProject }) {
             let opacity = 1;
             let zIndex = 10;
 
+            // Responsive offset calculations so shadowed cards in the back are clearly seen in mobile view
+            let shiftX = 380;
+            let translateZBack = -180;
+            let rotateAngle = 28;
+            let backScale = 0.86;
+
+            if (isMobile) {
+              shiftX = Math.round(Math.min(95, Math.max(55, windowWidth * 0.18)));
+              translateZBack = -110;
+              rotateAngle = 18;
+              backScale = 0.82;
+            } else if (isTablet) {
+              shiftX = 220;
+              translateZBack = -140;
+              rotateAngle = 22;
+              backScale = 0.84;
+            }
+
             if (posIndex === 0) {
               translateX = 0;
-              translateZ = 80;
+              translateZ = isMobile ? 35 : 80;
               rotateY = 0;
               scale = 1;
               opacity = 1;
               zIndex = 20;
             } else if (posIndex === 1) {
-              translateX = 380;
-              translateZ = -180;
-              rotateY = -28;
-              scale = 0.86;
-              opacity = 0.45;
+              translateX = shiftX;
+              translateZ = translateZBack;
+              rotateY = -rotateAngle;
+              scale = backScale;
+              opacity = isMobile ? 0.65 : 0.45;
               zIndex = 10;
             } else if (posIndex === -1) {
-              translateX = -380;
-              translateZ = -180;
-              rotateY = 28;
-              scale = 0.86;
-              opacity = 0.45;
+              translateX = -shiftX;
+              translateZ = translateZBack;
+              rotateY = rotateAngle;
+              scale = backScale;
+              opacity = isMobile ? 0.65 : 0.45;
               zIndex = 10;
             }
 
@@ -220,7 +252,7 @@ export default function FeatureFilmsSection({ onOpenProject }) {
                 onClick={() => handleSelect(index)}
                 style={{
                   position: 'absolute',
-                  width: 'clamp(300px, 50vw, 680px)',
+                  width: isMobile ? 'clamp(240px, 70vw, 315px)' : 'clamp(300px, 50vw, 680px)',
                   height: '100%',
                   transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
                   transformOrigin: 'center center',
@@ -231,8 +263,8 @@ export default function FeatureFilmsSection({ onOpenProject }) {
                   borderRadius: '16px',
                   border: `1px solid ${isCenter ? 'rgba(229, 9, 20, 0.55)' : 'rgba(255, 255, 255, 0.1)'}`,
                   boxShadow: isCenter
-                    ? '0 30px 90px -10px rgba(0, 0, 0, 0.98), 0 0 50px rgba(229, 9, 20, 0.35)'
-                    : '0 20px 50px rgba(0, 0, 0, 0.9)',
+                    ? '0 30px 90px -10px rgba(0, 0, 0, 0.98), 0 0 50px rgba(229, 9, 20, 0.35), 0 10px 40px rgba(0, 0, 0, 0.9)'
+                    : '0 20px 50px rgba(0, 0, 0, 0.95), -10px 0 30px rgba(0, 0, 0, 0.9), 10px 0 30px rgba(0, 0, 0, 0.9)',
                   overflow: 'hidden',
                   backgroundColor: '#0A090D',
                 }}
@@ -263,19 +295,34 @@ export default function FeatureFilmsSection({ onOpenProject }) {
                   }}
                 />
 
+                {/* 3D Deep Shadow Overlay for Background Cards */}
+                {!isCenter && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'rgba(5, 5, 7, 0.52)',
+                      boxShadow: 'inset 0 0 50px rgba(0, 0, 0, 0.95)',
+                      pointerEvents: 'none',
+                      zIndex: 4,
+                      transition: 'background 0.5s ease',
+                    }}
+                  />
+                )}
+
                 {/* Top Holographic Header Tag */}
                 <div
                   style={{
                     position: 'absolute',
-                    top: '18px',
-                    left: '20px',
-                    right: '20px',
+                    top: isMobile ? '12px' : '18px',
+                    left: isMobile ? '14px' : '20px',
+                    right: isMobile ? '14px' : '20px',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '11px',
-                    letterSpacing: '2px',
+                    fontSize: isMobile ? '10px' : '11px',
+                    letterSpacing: '1.5px',
                     color: '#FFF',
                     zIndex: 5,
                   }}
@@ -283,7 +330,7 @@ export default function FeatureFilmsSection({ onOpenProject }) {
                   <div
                     style={{
                       background: 'rgba(0, 0, 0, 0.75)',
-                      padding: '4px 10px',
+                      padding: isMobile ? '3px 8px' : '4px 10px',
                       borderRadius: '4px',
                       border: '1px solid rgba(255, 255, 255, 0.15)',
                       display: 'flex',
@@ -305,18 +352,18 @@ export default function FeatureFilmsSection({ onOpenProject }) {
                 <div
                   style={{
                     position: 'absolute',
-                    bottom: '22px',
-                    left: 'clamp(20px, 3vw, 36px)',
-                    right: 'clamp(20px, 3vw, 36px)',
+                    bottom: isMobile ? '16px' : '22px',
+                    left: isMobile ? '16px' : 'clamp(20px, 3vw, 36px)',
+                    right: isMobile ? '16px' : 'clamp(20px, 3vw, 36px)',
                     zIndex: 5,
                   }}
                 >
                   <div
                     style={{
                       fontFamily: 'var(--font-mono)',
-                      fontSize: '11px',
+                      fontSize: isMobile ? '10px' : '11px',
                       color: film.accent,
-                      letterSpacing: '3px',
+                      letterSpacing: isMobile ? '2px' : '3px',
                       marginBottom: '6px',
                     }}
                   >
@@ -326,11 +373,14 @@ export default function FeatureFilmsSection({ onOpenProject }) {
                   <h3
                     style={{
                       fontFamily: 'var(--font-action)',
-                      fontSize: 'clamp(2.4rem, 4.5vw, 4.2rem)',
+                      fontSize: isCenter
+                        ? (isMobile ? 'clamp(2rem, 5.5vw, 2.6rem)' : 'clamp(2.4rem, 4.5vw, 4.2rem)')
+                        : (isMobile ? '1.35rem' : 'clamp(1.8rem, 3.2vw, 2.8rem)'),
                       letterSpacing: '2px',
-                      color: '#FFFFFF',
+                      color: isCenter ? '#FFFFFF' : 'rgba(255, 255, 255, 0.42)',
                       lineHeight: 1,
-                      marginBottom: '12px',
+                      marginBottom: isMobile ? '8px' : '12px',
+                      textShadow: isCenter ? '0 4px 20px rgba(0,0,0,0.9)' : 'none',
                     }}
                   >
                     {film.title}
@@ -338,10 +388,10 @@ export default function FeatureFilmsSection({ onOpenProject }) {
 
                   <p
                     style={{
-                      fontSize: 'clamp(13px, 1.1vw, 15px)',
+                      fontSize: isMobile ? '12px' : 'clamp(13px, 1.1vw, 15px)',
                       color: 'var(--text-platinum)',
-                      lineHeight: 1.5,
-                      marginBottom: '16px',
+                      lineHeight: 1.45,
+                      marginBottom: isMobile ? '12px' : '16px',
                       display: isCenter ? 'block' : 'none',
                       maxWidth: '540px',
                     }}
@@ -356,19 +406,19 @@ export default function FeatureFilmsSection({ onOpenProject }) {
                         display: 'flex',
                         flexWrap: 'wrap',
                         gap: '6px',
-                        marginBottom: '20px',
+                        marginBottom: isMobile ? '14px' : '20px',
                       }}
                     >
-                      {film.stack.map((tech, tIdx) => (
+                      {film.stack.slice(0, isMobile ? 3 : film.stack.length).map((tech, tIdx) => (
                         <span
                           key={tIdx}
                           style={{
                             fontFamily: 'var(--font-mono)',
-                            fontSize: '10px',
+                            fontSize: isMobile ? '9px' : '10px',
                             color: 'var(--text-ash)',
                             background: 'rgba(255, 255, 255, 0.08)',
                             border: '1px solid rgba(255, 255, 255, 0.12)',
-                            padding: '3px 8px',
+                            padding: '2px 7px',
                             borderRadius: '3px',
                           }}
                         >
@@ -380,7 +430,7 @@ export default function FeatureFilmsSection({ onOpenProject }) {
 
                   {/* Actions for center card */}
                   {isCenter && (
-                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+                    <div style={{ display: 'flex', gap: isMobile ? '8px' : '12px', alignItems: 'center', flexWrap: 'wrap' }}>
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -388,9 +438,12 @@ export default function FeatureFilmsSection({ onOpenProject }) {
                           onOpenProject(film);
                         }}
                         className="btn-cinema"
-                        style={{ fontSize: '14px', padding: '9px 20px' }}
+                        style={{
+                          fontSize: isMobile ? '12px' : '14px',
+                          padding: isMobile ? '7px 14px' : '9px 20px',
+                        }}
                       >
-                        <Play size={14} fill="currentColor" />
+                        <Play size={isMobile ? 12 : 14} fill="currentColor" />
                         <span>EXPLORE DOSSIER</span>
                       </button>
 
@@ -399,13 +452,16 @@ export default function FeatureFilmsSection({ onOpenProject }) {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn-ghost"
-                        style={{ padding: '9px 16px', fontSize: '11px' }}
+                        style={{
+                          padding: isMobile ? '7px 12px' : '9px 16px',
+                          fontSize: isMobile ? '10px' : '11px',
+                        }}
                         onClick={(e) => {
                           e.stopPropagation();
                           soundEngine.playClick();
                         }}
                       >
-                        <ExternalLink size={13} />
+                        <ExternalLink size={isMobile ? 12 : 13} />
                         <span>LIVE REPO</span>
                       </a>
                     </div>
@@ -462,34 +518,45 @@ export default function FeatureFilmsSection({ onOpenProject }) {
             </span>
           </div>
 
-          {/* Stepper Buttons */}
-          <div style={{ display: 'flex', gap: '8px' }}>
-            {films.map((film, idx) => (
-              <button
-                key={film.id}
-                onClick={() => handleSelect(idx)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  background: activeIndex === idx ? 'rgba(229, 9, 20, 0.25)' : 'rgba(255, 255, 255, 0.05)',
-                  border: `1px solid ${activeIndex === idx ? 'var(--accent-crimson)' : 'rgba(255, 255, 255, 0.1)'}`,
-                  color: activeIndex === idx ? '#FFF' : 'var(--text-ash)',
-                  padding: '6px 14px',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '11px',
-                  letterSpacing: '1.5px',
-                  transition: 'all 0.25s ease',
-                }}
-              >
-                <span>0{idx + 1}</span>
-                <span style={{ display: activeIndex === idx ? 'inline' : 'none' }}>
-                  // {film.title}
-                </span>
-              </button>
-            ))}
+          {/* Stepper Dots (Theme matched) */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            {films.map((film, idx) => {
+              const isActive = activeIndex === idx;
+
+              return (
+                <button
+                  key={film.id}
+                  onClick={() => handleSelect(idx)}
+                  title={`0${idx + 1} // ${film.title}`}
+                  aria-label={`0${idx + 1} // ${film.title}`}
+                  style={{
+                    width: isActive ? '10px' : '8px',
+                    height: isActive ? '10px' : '8px',
+                    borderRadius: '50%',
+                    padding: 0,
+                    border: 'none',
+                    cursor: 'pointer',
+                    background: isActive ? 'var(--accent-crimson)' : 'rgba(255, 255, 255, 0.25)',
+                    boxShadow: isActive
+                      ? '0 0 10px var(--accent-crimson), 0 0 18px rgba(229, 9, 20, 0.7)'
+                      : 'none',
+                    transition: 'all 0.25s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.6)';
+                      e.currentTarget.style.transform = 'scale(1.25)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
+                      e.currentTarget.style.transform = 'scale(1)';
+                    }
+                  }}
+                />
+              );
+            })}
           </div>
 
           {/* Frame indicator */}

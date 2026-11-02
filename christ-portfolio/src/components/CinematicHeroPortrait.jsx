@@ -73,7 +73,8 @@ export default function CinematicHeroPortrait() {
       onMouseLeave={() => setIsHovered(false)}
       style={{
         position: 'relative',
-        width: 'clamp(320px, 32vw, 440px)',
+        width: 'clamp(280px, 86vw, 440px)',
+        maxWidth: '100%',
         aspectRatio: '3 / 4.1',
         borderRadius: '16px',
         perspective: '1200px',

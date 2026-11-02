@@ -248,3 +248,116 @@ html, body {
     display: block !important;
   }
 }
+
+/* Responsive Portrait Card Switcher: Desktop in Home, Mobile in About Me */
+.hero-portrait-desktop {
+  display: flex !important;
+}
+
+.hero-portrait-mobile {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .hero-portrait-desktop {
+    display: none !important;
+  }
+  .hero-portrait-mobile {
+    display: flex !important;
+  }
+}
+
+/* Skills Section: Compact & Horizontal Scrolling in Mobile View */
+.skills-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  width: 100%;
+}
+
+.skill-card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  min-width: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-swipe-hint {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .skills-container {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 14px !important;
+    padding: 8px 16px 20px 16px !important;
+    margin-left: -16px !important;
+    margin-right: -16px !important;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(229, 9, 20, 0.4) transparent;
+  }
+
+  .skills-container::-webkit-scrollbar {
+    height: 4px;
+  }
+  .skills-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+  }
+  .skills-container::-webkit-scrollbar-thumb {
+    background: var(--accent-crimson);
+    border-radius: 2px;
+  }
+
+  .skill-card {
+    flex: 0 0 clamp(250px, 76vw, 290px) !important;
+    scroll-snap-align: center !important;
+    scroll-snap-stop: always !important;
+  }
+
+  .mobile-swipe-hint {
+    display: flex !important;
+  }
+}
+
+/* Contact Grid: 2 columns top (Phone & Email), 3 columns bottom (GitHub, LinkedIn, Instagram) across all devices */
+.contact-monolith-panel {
+  padding: clamp(14px, 3.5vw, 44px) clamp(10px, 2.5vw, 40px);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.contact-direct-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: clamp(6px, 1.6vw, 18px) !important;
+  margin-bottom: clamp(14px, 2.5vh, 26px) !important;
+  width: 100% !important;
+  box-sizing: border-box;
+}
+
+.contact-social-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: clamp(5px, 1.3vw, 14px) !important;
+  width: 100% !important;
+  box-sizing: border-box;
+}
+
+.contact-card-item {
+  min-width: 0 !important;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+
+
+
