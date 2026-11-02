@@ -296,13 +296,10 @@ html, body {
     overflow-x: auto !important;
     overflow-y: hidden !important;
     scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch !important;
     gap: 14px !important;
     padding: 8px 16px 20px 16px !important;
     margin-left: -16px !important;
     margin-right: -16px !important;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(229, 9, 20, 0.4) transparent;
   }
 
   .skills-container::-webkit-scrollbar {

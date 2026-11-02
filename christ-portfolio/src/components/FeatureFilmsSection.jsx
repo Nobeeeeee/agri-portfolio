@@ -476,30 +476,34 @@ export default function FeatureFilmsSection({ onOpenProject }) {
         <div
           className="cinema-panel"
           style={{
-            maxWidth: '850px',
+            maxWidth: isMobile ? 'clamp(280px, 86vw, 360px)' : '850px',
             margin: '0 auto',
-            padding: '16px 24px',
+            padding: isMobile ? '7px 12px' : '16px 24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
             background: 'rgba(10, 9, 13, 0.95)',
             border: '1px solid rgba(229, 9, 20, 0.3)',
-            borderRadius: '8px',
-            flexWrap: 'wrap',
-            gap: '16px',
+            borderRadius: isMobile ? '6px' : '8px',
+            flexWrap: 'nowrap',
+            gap: isMobile ? '8px' : '16px',
+            boxSizing: 'border-box',
           }}
         >
           {/* Audio Waveform Meter */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <Activity size={16} color="var(--accent-crimson)" />
-            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '3px', height: '18px' }}>
-              {[12, 18, 8, 16, 22, 10, 14, 20, 15, 9, 17, 13].map((h, i) => (
+          <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '6px' : '10px', minWidth: 0 }}>
+            <Activity size={isMobile ? 13 : 16} color="var(--accent-crimson)" style={{ flexShrink: 0 }} />
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '2px', height: isMobile ? '12px' : '18px', flexShrink: 0 }}>
+              {(isMobile
+                ? [6, 11, 5, 12, 8, 10]
+                : [12, 18, 8, 16, 22, 10, 14, 20, 15, 9, 17, 13]
+              ).map((h, i) => (
                 <div
                   key={i}
                   style={{
-                    width: '3px',
+                    width: isMobile ? '2px' : '3px',
                     height: `${h}px`,
-                    backgroundColor: i === activeIndex * 4 ? 'var(--accent-crimson)' : 'rgba(255, 255, 255, 0.3)',
+                    backgroundColor: i === (isMobile ? activeIndex * 2 : activeIndex * 4) ? 'var(--accent-crimson)' : 'rgba(255, 255, 255, 0.3)',
                     borderRadius: '1px',
                     transition: 'height 0.3s ease, background-color 0.3s ease',
                   }}
@@ -509,17 +513,18 @@ export default function FeatureFilmsSection({ onOpenProject }) {
             <span
               style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: '11px',
-                letterSpacing: '2px',
+                fontSize: isMobile ? '9px' : '11px',
+                letterSpacing: isMobile ? '1px' : '2px',
                 color: 'var(--text-ash)',
+                whiteSpace: 'nowrap',
               }}
             >
-              SPATIAL 3D RADIAL FREQUENCY
+              {isMobile ? '3D RADIAL' : 'SPATIAL 3D RADIAL FREQUENCY'}
             </span>
           </div>
 
           {/* Stepper Dots (Theme matched) */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '7px' : '10px', flexShrink: 0 }}>
             {films.map((film, idx) => {
               const isActive = activeIndex === idx;
 
@@ -530,17 +535,18 @@ export default function FeatureFilmsSection({ onOpenProject }) {
                   title={`0${idx + 1} // ${film.title}`}
                   aria-label={`0${idx + 1} // ${film.title}`}
                   style={{
-                    width: isActive ? '10px' : '8px',
-                    height: isActive ? '10px' : '8px',
+                    width: isActive ? (isMobile ? '8px' : '10px') : (isMobile ? '6px' : '8px'),
+                    height: isActive ? (isMobile ? '8px' : '10px') : (isMobile ? '6px' : '8px'),
                     borderRadius: '50%',
                     padding: 0,
                     border: 'none',
                     cursor: 'pointer',
                     background: isActive ? 'var(--accent-crimson)' : 'rgba(255, 255, 255, 0.25)',
                     boxShadow: isActive
-                      ? '0 0 10px var(--accent-crimson), 0 0 18px rgba(229, 9, 20, 0.7)'
+                      ? '0 0 8px var(--accent-crimson), 0 0 14px rgba(229, 9, 20, 0.7)'
                       : 'none',
                     transition: 'all 0.25s ease',
+                    flexShrink: 0,
                   }}
                   onMouseEnter={(e) => {
                     if (!isActive) {
@@ -563,12 +569,14 @@ export default function FeatureFilmsSection({ onOpenProject }) {
           <div
             style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: '11px',
-              letterSpacing: '2px',
+              fontSize: isMobile ? '9px' : '11px',
+              letterSpacing: isMobile ? '1px' : '2px',
               color: 'var(--accent-amber)',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
             }}
           >
-            USE ← / → ARROWS TO ROTATE
+            {isMobile ? 'SWIPE ⇄' : 'USE ← / → ARROWS TO ROTATE'}
           </div>
         </div>
       </div>
